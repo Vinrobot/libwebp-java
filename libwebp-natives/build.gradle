@@ -1,0 +1,62 @@
+plugins {
+    id 'java-library'
+    id 'maven-publish'
+}
+
+group = rootProject.project_group
+version = rootProject.project_version
+
+def architectures = [
+    'darwin-x64', 'darwin-aarch64',
+    'windows-x64', 'windows-x86',
+    'linux-x64',
+]
+
+architectures.each { sourceSetName ->
+    sourceSets.create(sourceSetName) {
+        java {
+            srcDirs = ["src/${sourceSetName}/java"]
+        }
+        resources {
+            srcDirs = ["src/${sourceSetName}/resources"]
+        }
+        compileClasspath += sourceSets.main.output
+        runtimeClasspath += sourceSets.main.output
+    }
+
+    tasks.register("${sourceSetName}Jar", Jar) {
+        archiveClassifier.set(sourceSetName)
+        from(sourceSets.named(sourceSetName).map { it.output })
+    }
+
+    configurations.create("${sourceSetName}") {
+        extendsFrom configurations.implementation
+    }
+    configurations.create("${sourceSetName}RuntimeOnly") {
+        extendsFrom configurations.runtimeOnly
+    }
+
+    artifacts.add("${sourceSetName}", tasks.named("${sourceSetName}Jar"))
+}
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            from components.java
+
+            architectures.each { sourceSetName ->
+                artifact(tasks.named("${sourceSetName}Jar")) {
+                    classifier = sourceSetName
+                }
+            }
+        }
+    }
+
+    repositories {
+        maven {
+            def releasesRepoUrl = layout.buildDirectory.dir('repos/releases')
+            def snapshotsRepoUrl = layout.buildDirectory.dir('repos/snapshots')
+            url = version.endsWith('SNAPSHOT') ? snapshotsRepoUrl : releasesRepoUrl
+        }
+    }
+}

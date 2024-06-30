@@ -1,0 +1,36 @@
+plugins {
+    id 'java-library'
+    id 'maven-publish'
+}
+
+group = rootProject.project_group
+version = rootProject.project_version
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testImplementation platform('org.junit:junit-bom:5.9.1')
+    testImplementation 'org.junit.jupiter:junit-jupiter'
+
+    implementation project(path: ':libwebp-api')
+
+    runtimeOnly project(path: ':libwebp-natives', configuration: 'darwin-x64')
+    runtimeOnly project(path: ':libwebp-natives', configuration: 'darwin-aarch64')
+    runtimeOnly project(path: ':libwebp-natives', configuration: 'windows-x64')
+    runtimeOnly project(path: ':libwebp-natives', configuration: 'windows-x86')
+    runtimeOnly project(path: ':libwebp-natives', configuration: 'linux-x64')
+}
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
+
+    withJavadocJar()
+    withSourcesJar()
+}
+
+test {
+    useJUnitPlatform()
+}
