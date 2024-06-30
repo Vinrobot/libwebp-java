@@ -1,3 +1,6 @@
 [submodule "libwebp-natives/vendor/libwebp"]
 	path = libwebp-natives/vendor/libwebp
 	url = https://chromium.googlesource.com/webm/libwebp.git
+[submodule "libwebp-api/src/testFixtures/resources/libwebp-test-data"]
+	path = libwebp-api/src/testFixtures/resources/libwebp-test-data
+	url = https://chromium.googlesource.com/webm/libwebp-test-data.git
