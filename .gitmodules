@@ -1,0 +1,3 @@
+[submodule "libwebp-natives/vendor/libwebp"]
+	path = libwebp-natives/vendor/libwebp
+	url = https://chromium.googlesource.com/webm/libwebp.git
