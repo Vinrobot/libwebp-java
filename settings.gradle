@@ -1,5 +1,6 @@
 rootProject.name = 'libwebp-java'
 
 include 'libwebp-api'
+include 'libwebp-foreign-jdk21'
 include 'libwebp-jna'
 include 'libwebp-natives'

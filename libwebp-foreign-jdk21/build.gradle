@@ -1,0 +1,57 @@
+plugins {
+    id 'java-library'
+    id 'maven-publish'
+}
+
+group = rootProject.project_group
+version = rootProject.project_version
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testImplementation platform('org.junit:junit-bom:5.9.1')
+    testImplementation 'org.junit.jupiter:junit-jupiter'
+
+    implementation project(path: ':libwebp-api')
+    testImplementation testFixtures(project(path: ':libwebp-api'))
+
+    runtimeOnly project(path: ':libwebp-natives', configuration: 'darwin-x64')
+    runtimeOnly project(path: ':libwebp-natives', configuration: 'darwin-aarch64')
+    runtimeOnly project(path: ':libwebp-natives', configuration: 'windows-x64')
+    runtimeOnly project(path: ':libwebp-natives', configuration: 'windows-x86')
+    runtimeOnly project(path: ':libwebp-natives', configuration: 'linux-x64')
+}
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(21)
+    }
+
+    sourceCompatibility = JavaVersion.VERSION_21
+    targetCompatibility = JavaVersion.VERSION_21
+
+    withJavadocJar()
+    withSourcesJar()
+}
+
+test {
+    useJUnitPlatform()
+}
+
+tasks.withType(JavaCompile).configureEach {
+    options.compilerArgs += "--enable-preview"
+}
+tasks.withType(Test).configureEach {
+    jvmArgs += "--enable-preview"
+}
+tasks.withType(JavaExec).configureEach {
+    jvmArgs += "--enable-preview"
+}
+tasks.withType(Javadoc).configureEach {
+    // https://github.com/gradle/gradle/issues/27001#issuecomment-1803632810
+    CoreJavadocOptions opt = options as CoreJavadocOptions
+    opt.addStringOption("source", "21")
+    opt.addBooleanOption("-enable-preview", true)
+}
