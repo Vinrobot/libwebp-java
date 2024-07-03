@@ -15,6 +15,7 @@ dependencies {
     testImplementation 'org.junit.jupiter:junit-jupiter'
 
     implementation project(path: ':libwebp-api')
+    implementation 'net.java.dev.jna:jna:5.14.0'
 
     runtimeOnly project(path: ':libwebp-natives', configuration: 'darwin-x64')
     runtimeOnly project(path: ':libwebp-natives', configuration: 'darwin-aarch64')
