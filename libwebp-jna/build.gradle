@@ -13,6 +13,7 @@ repositories {
 dependencies {
     testImplementation platform('org.junit:junit-bom:5.9.1')
     testImplementation 'org.junit.jupiter:junit-jupiter'
+    testImplementation testFixtures(project(path: ':libwebp-api'))
 
     implementation project(path: ':libwebp-api')
     implementation 'net.java.dev.jna:jna:5.14.0'
