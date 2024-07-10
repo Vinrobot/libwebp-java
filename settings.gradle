@@ -1,6 +1,13 @@
+import org.gradle.internal.jvm.Jvm
+
 rootProject.name = 'libwebp-java'
 
 include 'libwebp-api'
-include 'libwebp-foreign-jdk21'
+
+def javaVersion = Jvm.current().javaVersion
+if (javaVersion >= JavaVersion.VERSION_21) {
+    include 'libwebp-foreign-jdk21'
+}
+
 include 'libwebp-jna'
 include 'libwebp-natives'
