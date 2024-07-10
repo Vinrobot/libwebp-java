@@ -30,7 +30,7 @@ RUN set -ex \
 	&& make install \
     && cd "$OUTPUT/lib" \
     && "$TARGET"-gcc -c -g -I.. -DWEBP_DLL /libwebp/export.c \
-    && "$TARGET"-gcc -shared -o libwebp.dll export.o libwebp.a libwebpdemux.a \
+    && "$TARGET"-gcc -shared -static-libgcc -o libwebp.dll export.o libwebp.a libwebpdemux.a \
     && "$TARGET"-strip --strip-debug libwebp.dll
 
 
