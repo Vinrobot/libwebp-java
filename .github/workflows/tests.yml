@@ -1,0 +1,37 @@
+on: [ push ]
+
+jobs:
+  test:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ ubuntu-latest, windows-latest, macos-latest ]
+        java_version: [ '17', '21' ]
+        java_arch: [ '' ]
+        include:
+          # Java 17 x86 on Windows x64
+          - os: windows-latest
+            java_version: '17'
+            java_arch: x86
+
+    runs-on: ${{ matrix.os }}
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: 'recursive'
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: ${{ matrix.java_version }}
+          architecture: ${{ matrix.java_arch }}
+
+      - name: Gradle Wrapper Validation
+        uses: gradle/actions/wrapper-validation@v3
+
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v3
+
+      - name: Tests with Gradle
+        run: ./gradlew test
