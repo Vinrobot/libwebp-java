@@ -9,6 +9,7 @@ import net.vinrobot.webp.foreign.jdk21.internal.WebPAnimDecoder;
 import net.vinrobot.webp.foreign.jdk21.internal.WebPAnimInfo;
 import net.vinrobot.webp.foreign.jdk21.internal.WebPData;
 
+import java.io.IOException;
 import java.lang.foreign.Arena;
 
 public class JDK21WebPReader implements WebPReader {
@@ -17,7 +18,7 @@ public class JDK21WebPReader implements WebPReader {
     private final WebPAnimDecoder decoder;
     private WebPMetadata metadata;
 
-    public JDK21WebPReader(final byte[] buffer, final int offset, final int length) {
+    public JDK21WebPReader(final byte[] buffer, final int offset, final int length) throws IOException {
         Loader.ensureLibrary();
 
         this.arena = Arena.ofConfined();

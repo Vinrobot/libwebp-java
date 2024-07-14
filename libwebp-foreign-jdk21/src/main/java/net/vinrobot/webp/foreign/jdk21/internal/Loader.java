@@ -8,17 +8,13 @@ public final class Loader {
 
     private static boolean initialized = false;
 
-    public static void ensureLibrary() {
+    public static void ensureLibrary() throws IOException {
         if (!initialized) {
             synchronized (Loader.class) {
                 if (!initialized) {
-                    try {
-                        final Path libPath = Platform.extractFromResourcePath(LIB_NAME);
-                        System.load(libPath.toString());
-                        initialized = true;
-                    } catch (IOException e) {
-                        throw new RuntimeException(e);
-                    }
+                    final Path libPath = Platform.extractFromResourcePath(LIB_NAME);
+                    System.load(libPath.toString());
+                    initialized = true;
                 }
             }
         }
