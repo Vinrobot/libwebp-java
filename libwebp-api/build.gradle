@@ -12,7 +12,7 @@ repositories {
 }
 
 dependencies {
-    testImplementation(testFixturesApi(platform('org.junit:junit-bom:5.10.3')))
+    testImplementation(testFixturesApi(platform('org.junit:junit-bom:5.11.0')))
     testImplementation(testFixturesApi('org.junit.jupiter:junit-jupiter'))
 
     runtimeOnly project(path: ':libwebp-natives', configuration: 'darwin-x64')
