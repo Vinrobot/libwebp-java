@@ -17,7 +17,7 @@ dependencies {
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 
     implementation project(path: ':libwebp-api')
-    implementation 'net.java.dev.jna:jna:5.17.0'
+    implementation 'net.java.dev.jna:jna:5.18.0'
 
     runtimeOnly project(path: ':libwebp-natives', configuration: 'darwin-x64')
     runtimeOnly project(path: ':libwebp-natives', configuration: 'darwin-aarch64')
