@@ -24,7 +24,7 @@ jobs:
         run: ./gradlew build
 
       - name: Archive build artifacts
-        uses: actions/upload-artifact@v6
+        uses: actions/upload-artifact@v7
         with:
           name: dist-jar
           path: '*/build/libs/*.jar'
